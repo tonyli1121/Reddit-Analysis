@@ -1,11 +1,11 @@
 # Existence of "Six degrees of separation" on Reddit
-This is a research project from CSCD25 (Advance Data Analysis) on research question that I came up myself supervised by Professor Anderson and TA Waller.
+This is a research project from CSCD25 (Advance Data Analysis) on the research question that I came up on myself supervised by Professor Anderson and TA Waller.
 
 ## Abstract:
 
 The Six degrees of seperation (also known as six handshakes rule) is an idea that all people are six or fewer social connections away from each other. As a result, a chain of "friend of a friend" statement can be made to connect any two people in a maximum of six steps. 
 
-Several studies, such as Milgram's small-world experiment, have been conducted to measure this connectness empirically, and nowadays the phrase "six degrees of separation" is now often used as a synonym for the idea of the "small world" phenomenon.
+Several studies, such as Milgram's small-world experiment, have been conducted to measure this connectedness empirically, and nowadays the phrase "six degrees of separation" is now often used as a synonym for the idea of the "small world" phenomenon.
 
 	Some ground-breaking phenomenons discovered by researchers are 
 	1) There are 19 degrees of separation between any two web pages (by Hungarian physicist Albert-László Barabási in 2013). 
@@ -113,7 +113,7 @@ Verify the hypothesis/research goals by
 		
 		Alternative dropped methods:
 			- Analyze after the paper of Generalists and Specialsts, on whether the generalists/specialists make
-			any difference to the path length. Dropped because this would be based on the about analysis work,
+			any difference to the path length. Dropped because this would be based on how the above analysis works,
 			and would require much more indepth work. Consider the time and level we are at, it seemed hard to achieve.
 		
 3. What dataset(s) will you use?
