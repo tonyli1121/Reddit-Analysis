@@ -97,50 +97,45 @@ Verify the hypothesis/research goals by
 	
 ## Questions / Problems to think about
 
-1.  what is the question you intend to answer?
-
+1. What is the question you intend to answer?
 	
-	as listed in RESEARCH QUESTIONS
+		as listed in RESEARCH QUESTIONS
 	
-2. What is the analysis strategy you will use in your pursuit of this question? What analyses, modeling steps, and visualization plans do you have? What alternatives did you consider but eventually drop in favour of your proposed plan?
+2. What is the analysis strategy you will use in your pursuit of this question? What analyses, modeling steps, and visualization plans do you have? What alternatives did 	you consider but eventually drop in favour of your proposed plan?
 
-
-	Analysis strategy:
-		- use unsupervised learning to look at the data first
-		- create a function to return path length of any two given posts
-		- apply the function on all posts
-		- visualize the data by create matrix, bar charts as described in STEPS
+		Analysis strategy:
+			- use unsupervised learning to look at the data first
+			- create a function to return path length of any two given posts
+			- apply the function on all posts
+			- visualize the data by create matrix, bar charts as described in STEPS
 		
-	Alternative dropped methods:
-		- Analyze after the paper of Generalists and Specialsts, on whether the generalists/specialists make
-		any difference to the path length. Dropped because this would be based on the about analysis work,
-		and would require much more indepth work. Consider the time and level we are at, it seemed hard to achieve.
+		Alternative dropped methods:
+			- Analyze after the paper of Generalists and Specialsts, on whether the generalists/specialists make
+			any difference to the path length. Dropped because this would be based on the about analysis work,
+			and would require much more indepth work. Consider the time and level we are at, it seemed hard to achieve.
 		
 3. What dataset(s) will you use?
 	
-	
-	Full dataset is the best choice. Since it provides a more general understanding on the path distance overall on Reddit.
-	Using the full dataset we will be able to create a report similar to Facebook's data team.
-	
-	However, it would probably be too large and unnecessary. Hence, the main dataset with only metadata would be more applicable.
-	Also since the main dataset is random 2% down-sample, we can maintain the data characteristics while process with a easier dataset.
-	
-	Not using the text dataset b/c we won't need the exact comment text.
+		Full dataset is the best choice. Since it provides a more general understanding on the path distance overall on Reddit.
+		Using the full dataset we will be able to create a report similar to Facebook's data team.
+
+		However, it would probably be too large and unnecessary. Hence, the main dataset with only metadata would be more applicable.
+		Also since the main dataset is random 2% down-sample, we can maintain characteristics while process with a easier dataset.
+
+		Not using the text dataset b/c we won't need the exact comment text.
 	
 4. How will you manage the size of the dataset(s) you have chosen?
-
-
-	Consider the size of main dataset is still 1GB, I will create a report using all data if possible (very less likely).
-	However, most likely I will just use a random proportion of the post ids to create matrix and bar charts. This would help
-	reduce the amount of data that I pass into my model.
+	
+		Consider the size of main dataset is still 1GB, I will create a report using all data if possible (very less likely).
+		However, most likely I will just use a random proportion of data to create matrix and bar charts. This would help
+		reduce the amount of data that I pass into my model.
 
 5. How will you filter, transform, and/or enrich the raw data to get it in a form appropriate for your project?
 
-
-	See the jupyter notebook file for more details.
-	I'm not planning to add too much addition information, as the given post and users should be enough to connect everything.
-	I will keep the dataset even some posts are not as upvoted/downvoted as other posts, because it will show the generality.
-	The plan on processing data may change through the data processing process.
+		See the jupyter notebook file for more details.
+		I'm not planning to add too much addition information, the post and users should be enough to connect everything.
+		I will keep the dataset without dropping too much rows, because it will show the generality.
+		The plan on processing data may change through the data processing process.
 	
 
 ## References that decided to use:
