@@ -102,7 +102,7 @@ will this supply any of the hypothesis (or is there any connection between the r
 	<3> Visualize data using the model.
 	<4> Check against conclusion from <1.1>
 
-## Other possible research questions:
+## Other possible research questions if the six handshake is not acceptable:
 
 	<1> among different posts, what are the top topics users talk about? (USING NLP)
 		- Political? 
