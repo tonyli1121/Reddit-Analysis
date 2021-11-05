@@ -14,7 +14,8 @@ Several studies, such as Milgram's small-world experiment, have been conducted t
 	
 	3) Facebook's data team released two papers in November 2011 which document that amongst all Facebook users at the time of research 
 	(721 million users with 69 billion friendship links) 
-	There is an average distance of 4.74. And by February 2016, the distance is 4.57 on avg on 1.6 billion users (about 22% of the world population)
+	There is an average distance of 4.74. And by February 2016, the distance is 4.57 on avg on 1.6 billion users 
+	(about 22% of the world population)
 	
 	4) On average, about 50% of people on Twitter are only four steps away from each other.
 	...
@@ -25,7 +26,8 @@ Reddit, known as one of the most famous social news and discussion website, also
 
 Based on how Reddit works
 
-	registered members submit posts to the site such as links, text posts, images, and videos, which are then voted up or down and commented by other members
+	registered members submit posts to the site such as links, text posts, images, and videos, which are then voted up 
+	or down and commented by other members
 	
 I am particularly interested in the existence of the Six Degrees of Separation on Reddit.
 
