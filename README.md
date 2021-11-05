@@ -23,9 +23,12 @@ Several studies, such as Milgram's small-world experiment, have been conducted t
 	
 Reddit, known as one of the most famous social news and discussion website, also has a huge amount of users. According to an analysis on reddit's monthly visitors, as of June 2021, Reddit had almost 48 million monthly active users.	(https://www.statista.com/statistics/443332/reddit-monthly-visitors/) 
 
-	Based on how Reddit works (registered members submit posts to the site such as links, text posts, images, and videos,
-	which are then voted up or down and commented by other members). I am particularly interested in the existence of 
-	the Six Degrees of Separation on Reddit.
+Based on how Reddit works
+
+	registered members submit posts to the site such as links, text posts, images, and videos,
+	which are then voted up or down and commented by other members
+	
+I am particularly interested in the existence of the Six Degrees of Separation on Reddit.
 
 ## Research Question:
 
@@ -47,7 +50,7 @@ An example would be as followed:
 	  commented user4     user5, user 6
 		  /	          \       \
 		 /		   \       \
-	    asked "C"       	answered "C"   asked "B"
+	    asked "C"       answered "C"   asked "B"
 	Then we say there is a path from A -> user3 -> user6 -> B, and has a distance of 3
 	
 Here are a list of research goals with <1>, <3> being the primary ones:
