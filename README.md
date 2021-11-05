@@ -85,23 +85,23 @@ Verify the hypothesis/research goals by
 		
 ## Steps:
 
-<0> Clean the dataset
+0. Clean the dataset
 
-<1> Unsupervised learning to group (a) posts, (b) users by title/topics for brief overview
+1. Unsupervised learning to group (a) posts, (b) users by title/topics for brief overview
 
-<2> Build a model that takes parameters [id_1, id_2] and return path length if there exists. 
+2. Build a model that takes parameters [id_1, id_2] and return path length if there exists. 
 
-<3> Visualize data using the model
+3. Visualize data using the model
 
-<4> Check against hypothesis and repeat the analysis process
+4. Check against hypothesis and repeat the analysis process
 	
 ## Questions / Problems to think about
 
-<1>  what is the question you intend to answer?
+1.  what is the question you intend to answer?
 	
 	as listed in RESEARCH QUESTIONS
 	
-<2> What is the analysis strategy you will use in your pursuit of this question? What analyses, modeling steps, and visualization plans do you have? What alternatives did you consider but eventually drop in favour of your proposed plan?
+2. What is the analysis strategy you will use in your pursuit of this question? What analyses, modeling steps, and visualization plans do you have? What alternatives did you consider but eventually drop in favour of your proposed plan?
 
 	Analysis strategy:
 		- use unsupervised learning to look at the data first
@@ -114,7 +114,7 @@ Verify the hypothesis/research goals by
 		any difference to the path length. Dropped because this would be based on the about analysis work,
 		and would require much more indepth work. Consider the time and level we are at, it seemed hard to achieve.
 		
-<3> What dataset(s) will you use?
+3. What dataset(s) will you use?
 	
 	Full dataset is the best choice. Since it provides a more general understanding on the path distance overall on Reddit.
 	Using the full dataset we will be able to create a report similar to Facebook's data team.
@@ -124,13 +124,13 @@ Verify the hypothesis/research goals by
 	
 	Not using the text dataset b/c we won't need the exact comment text.
 	
-<4> How will you manage the size of the dataset(s) you have chosen?
+4. How will you manage the size of the dataset(s) you have chosen?
 
 	Consider the size of main dataset is still 1GB, I will create a report using all data if possible (very less likely).
 	However, most likely I will just use a random proportion of the post ids to create matrix and bar charts. This would help
 	reduce the amount of data that I pass into my model.
 
-<5> How will you filter, transform, and/or enrich the raw data to get it in a form appropriate for your project?
+5. How will you filter, transform, and/or enrich the raw data to get it in a form appropriate for your project?
 
 	See the jupyter notebook file for more details.
 	I'm not planning to add too much addition information, as the given post and users should be enough to connect everything.
@@ -153,6 +153,8 @@ will this supply any of the hypothesis (or is there any connection between the r
 	
 
 ## Other possible research questions if the six handshake is not acceptable:
+
+This section will be deleted if the proposal on handshaking is feasible
 
 	<1> among different posts, what are the top topics users talk about? (USING NLP)
 		- Political? 
