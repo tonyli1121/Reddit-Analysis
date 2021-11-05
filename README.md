@@ -25,8 +25,7 @@ Reddit, known as one of the most famous social news and discussion website, also
 
 Based on how Reddit works
 
-	registered members submit posts to the site such as links, text posts, images, and videos,
-	which are then voted up or down and commented by other members
+	registered members submit posts to the site such as links, text posts, images, and videos, which are then voted up or down and commented by other members
 	
 I am particularly interested in the existence of the Six Degrees of Separation on Reddit.
 
