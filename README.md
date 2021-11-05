@@ -84,13 +84,16 @@ Verify the hypothesis/research goals by
 		4b) bar chart (x-axis = distance value, y-axis = # of paths)
 		
 ## Steps:
-	<0> Clean the dataset
-	<1> Unsupervised learning to group (a) posts, (b) users using (a) topics (b) texts analysis
-		<1.1> Draw hypothesis 
-		(YES if connected, NO if seperated. If hard to determine by unsupervised learning result, jump directly to analysis)
-	<2> Build a model that takes parameters [id_1, id_2] and return path length if there exists. (exact method TBD)
-	<3> Visualize data using the model and check against the verifying steps in HYPOTHESIS section.
-	<4> Check against conclusion from <1.1>
+
+<0> Clean the dataset
+
+<1> Unsupervised learning to group (a) posts, (b) users by title/topics for brief overview
+
+<2> Build a model that takes parameters [id_1, id_2] and return path length if there exists. 
+
+<3> Visualize data using the model
+
+<4> Check against hypothesis and repeat the analysis process
 	
 ## Questions / Problems to think about
 
@@ -136,6 +139,8 @@ Verify the hypothesis/research goals by
 	
 
 ## References that decided to use:
+
+Wikipedia
 
 papers on six handshake rule (to help build the model)
 
