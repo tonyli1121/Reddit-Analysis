@@ -1,7 +1,5 @@
-# Reddit-Analysis
+# Existence of "Six degrees of separation" on Reddit
 This is a research project from CSCD25 (Advance Data Analysis) on research question that I came up myself supervised by Professor Anderson and TA Waller.
-
-## Existence of "Six degrees of separation" on Reddit
 
 ## Abstract:
 (by wiki) 
