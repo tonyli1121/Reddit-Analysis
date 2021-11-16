@@ -68,7 +68,7 @@ Here are a list of research questions with <2>,<3> being the primary ones:
 1. There is a "Small world"/"Six Handshake Rule" between users
 2. There is a "post" chain.
 3. It should be hard but worth try
-4. more than 10 topics; posts have smaller path length within the topic cluster they belongs to
+4. Posts will have smaller path length in the subreddits they belong to
 	
 Verify the hypothesis/research goals by
 	
