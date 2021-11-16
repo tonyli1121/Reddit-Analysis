@@ -1,4 +1,4 @@
-# Existence of "Six degrees of separation" on Reddit - Potential of Quick Information Flow(CSCD25 Project)
+# Existence of "Six Degrees of Separation" on Reddit - Potential of Quick Information Flow
 This is a research project from CSCD25 (Advanced Data Analysis) supervised by Professor Anderson and TA Waller.
 
 ## Abstract
