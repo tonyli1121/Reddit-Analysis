@@ -196,13 +196,13 @@ For underiected graph G = (V, E),
 
 We create a column called `link_author` to represent the author of `link_id`
 
-`
+```
 id_author = submissions[['id','author']].append(comments[['id','author']])
 id_author.columns=['link_id','link_author']
 comments.merge(id_author, left_on='link_id', right_on='link_id')
 link_df = comments[['author','link_author']]
-`
-gives us ~[link_df](pictures/link_df.png)
+```
+gives us ![link_df](pictures/link_df.png)
 	
 ## References that decided to use:
 
