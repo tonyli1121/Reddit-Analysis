@@ -72,42 +72,47 @@ I am particularly interested in the existence of the Six Degrees of Separation o
 
 ## Research Question:
 
-The goal of this research is to find if given two authors/posts, if there exist a path to get to one from another by tracking user activities in small # of steps.
+The goal of this research is to find if given two authors, if there exist a path to get to one from another by tracking user activities in small # of steps.
 	
 A brief example would be as followed:
+```
 
             user 1 asked "A" 
 		 /\
 		/  \
-	 answered by user2,user3
+answered by user2,user3
 	     /         \
 	    /           \
-	commented by user4   user5, user 6
+commented by user4   user5, user 6
           /	          \       \
          /		    \       \
-	asked "C"       answered "C"   asked "B"
+    asked "C"       answered "C"   asked "B"
 
-Then we say there is a path from A -> user3 -> user6 -> B, and has a distance of 3
-	
-Here are a list of research questions with <2>,<3> being the primary ones:
+Then we say there is a path from 
+	user3 -> user1 (user3 commented user1's post "A")
+	user1 -> user5 (user5 commented a comment under user1's post)
+Hence, user3 is connected with user5 with a path length of 2
+```
+Here are a list of research questions:
     
-1. Is there a "friend of friend" chain (info flow chain) in reddit users (i.e., by commenting)? If so what is the avg distance between users?
-    (This question should be similar to the ordinary Six Handshake Problem)
+1. Does there exist a "friend of friend" chain in reddit users (i.e., connected by commenting)? If so what is the chance of existence?
+
+2. Among all the paths, what is the average path length? Is it small (easy to get from one user to another)?
     
-2. Is there a "post" chain? For example, can we get from one post to another by tracking user activity as the example above? If so what are the avg distance of the "post" chain?
-    (although this question is similar to the above one, it could give a different result as the length of path may differ a lot based on situations)
+3. Can we form any relation between clusters and length of path?
+    (i.e., repeat the previous two problems, but only under same subreddit)
     
-3. Can we predict the distance if the path exist?
-    
-4. (If have time)Can we form any relation between clusters and length of path?
-    (i.e., what is the relationship between posts path length within a subreddit V.S. overall posts path length)
+4. How do the "active" users affect the length of path?
+
 
 ## Hypothesis:
 	
 1. There is a "Small world"/"Six Handshake Rule" between users
-2. There is a "post" chain.
-3. It should be hard but worth try
-4. Posts will have smaller path length in the subreddits they belong to
+2. The average path length is ~6 
+3. Yes, smaller cluster has smaller path length
+	3.1 There also exists path between users under subreddits
+	3.2 The path length under subreddits is slightly smaller than the general path length (i.e., ~4 or ~5)
+4. The "active" users are not crucial in constructing path, but they are the key factor to keep path length small.
 	
 Verify the hypothesis/research goals by
 	
