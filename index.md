@@ -140,13 +140,15 @@ To answer our first two questions, we will need to play around with the main dat
 
 #### main_comments
 
-
+![main_comments_dataframe](pictures/main_comments.png)
 
 
 #### main_submissions
 
+![main_submissions_dataframe](pictures/main_submissions.png)
 
-
+Here we see that there are several rows in `domain` that are NaN, after looking into the data, we dropped these rows because they have little influence on the data.
+[!submissions_nan](pictures/submissions_nan.png)
 
 
 
