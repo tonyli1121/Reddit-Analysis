@@ -134,6 +134,22 @@ Verify the hypothesis/research goals by
 
 ---
 
+## Working on Main Dataset
+
+To answer our first two questions, we will need to play around with the main datasets: main_comments and main_submissions. Here's some insights on the datasets.
+
+#### main_comments
+
+
+
+
+#### main_submissions
+
+
+
+
+
+
 	
 ## References that decided to use:
 
