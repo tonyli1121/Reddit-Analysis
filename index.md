@@ -219,6 +219,11 @@ We use `nx`'s builtin function to find shortest path length from each node to ot
 
 We also filtered the data by excluding all the nodes with degree <= 1. We will consider those nodes as isolated nodes that have few connection to other nodes. It turns out this procedure not only saves running time but also maintains the data pattern.
 
+```
+G1.DelDegKNodes(1,1)
+G1.DelDegKNodes(0,0)    
+```
+
 According to the results above, here are some plottings to better help us understand the data
 
 
@@ -226,16 +231,25 @@ According to the results above, here are some plottings to better help us unders
 
 Since this network G is sparse in edges, we use `dijkstra` on each nodes instead of using `floyd-warshall` path finding algorithm. This improved our time complexity from `O(V^3)` to `O(VE Log V)`
 
+`nx.single_source_dijkstra_path_length(G,i,cutoff=10)`
+
 Consider `networkx` is intense on memory, we use `snap.py` to speed up the process.
+
+```
+import snap
+pathlen = G.GetShortPathAll(i)
+```
 
 Here's how our model's performance increased on same amount of data (50% of main datasets):
 ` Kernal dies (memory error) => ~330hrs (did not use nx) => 15hrs (dijkstra) => 1~2hr(snap.py on filtered data)`
 
 According to the results, we can answer research question 1 and 2:
 
-`q1:` We see that the chance for a path to exist increases as we have more nodes in the graph. However, it is not sufficient to conclude that the network is connected as a large component
+`q1:` We see that the chance for a path to exist increases as we have more nodes in the graph. However, it is not sufficient to conclude that the network is connected as a large component. Hence the conclusion is that: **there does not exist a 'user chain' in main_dataset**
 
-`q2:` We only see that as number of nodes increases, the avg path length increases. Hence, we can't say we have a small path length. The assumption is that the path length will remain increasing but capped at certain value (similar pattern as the log regression capped at 1).
+`q2:` We only see that as number of nodes increases, the avg path length increases. Although the number is small, it does not represent the overall path length. **Hence, we have small path length among the existed paths, but it does not represent the overall path length as there's very few path existed in the graph.** 
+
+The assumption is that the path length will remain increasing but capped at certain value (similar pattern as the log regression capped at 1), which will require us to check in the `full dataset analysis` that uses the smallest subreddit for comprehensive understanding, and also using the entire full dataset for detailed analysis.
 
 `further steps:` Perform same analysis on some sort of full dataset. Given the circumstance that my device can't handle the entire full dataset, we will take all posts under `PS5 (the smallest subreddit)` for analysis. We can consider processing the full dataset for a more comprehensive understanding once we get a powerful enough device, but not during this research.
 
