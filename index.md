@@ -136,22 +136,73 @@ Verify the hypothesis/research goals by
 
 ## Working on Main Dataset
 
+### Looking at the data
+
 To answer our first two questions, we will need to play around with the main datasets: main_comments and main_submissions. Here's some insights on the datasets.
 
 #### main_comments
 
 ![main_comments_dataframe](pictures/main_comments.png)
 
-
 #### main_submissions
 
 ![main_submissions_dataframe](pictures/main_submissions.png)
 
 Here we see that there are several rows in `domain` that are NaN, after looking into the data, we dropped these rows because they have little influence on the data.
-[!submissions_nan](pictures/submissions_nan.png)
+
+![submissions_nan](pictures/submissions_nan.png)
+
+### Insights on the two datasets
+
+**we see that for comments data:**
+
+    - 28M rows, 6 columns
+    - no null values
+    - mean of score is much higher than median <- potential of outliers on popularity -> careful on prediction
+    
+**we see that for submissionss data:**
+
+    - 1.8M rows, 7 columns
+    - "domain" has null values
+        - 309 submissions have NaN domain
+        - the mean and median score are both low
+        - not all subreddits submissions have NaN domain
+        - since number is very low comparing to the amount of samples we have => DROP them
+    - mean of score is much higher than median <- potential of outliers on popularity <- for our analysis purpose, no impact
+    
+**conclusion on oberserving data**
+
+    - for the user/post connection, since link_id in comments is not necessarily a subset of submission_id,
+      we need to explicitly choose the data to form our matrix
+    - We also notice that link_id (submission_id) starts with 't3_' and comment_id starts with 't1_'
 
 
+### Constructing graph
 
+if a commented b / vice-versa, then a is connected to b
+
+Generally, we check the id <-> link_id connection and build edges between authors.
+
+We can use the "authors" to represent each vertex, and author_i is connected to author_j iff author_i commented author_j (undirected graph)
+
+```
+For underiected graph G = (V, E), 
+    - V = authors
+    - O(|V|) = O(|authors_of_submissions|) + O(|authors_of_comments|)
+    - E = (a_i, a_j), a_i's submission is commented by a_j or reverse
+    - O(|E|) = |comments|
+    - O(|G|) = |V|^2 (NxN matrix representation)
+```
+
+We create a column called `link_author` to represent the author of `link_id`
+
+`
+id_author = submissions[['id','author']].append(comments[['id','author']])
+id_author.columns=['link_id','link_author']
+comments.merge(id_author, left_on='link_id', right_on='link_id')
+link_df = comments[['author','link_author']]
+`
+gives us ~[link_df](pictures/link_df.png)
 	
 ## References that decided to use:
 
