@@ -199,16 +199,61 @@ We create a column called `link_author` to represent the author of `link_id`
 ```
 id_author = submissions[['id','author']].append(comments[['id','author']])
 id_author.columns=['link_id','link_author']
-comments.merge(id_author, left_on='link_id', right_on='link_id')
-link_df = comments[['author','link_author']]
+comments.merge(id_author, left_on='link_id', right_on='link_id', inplace=True)
+link_df = comments[['id','link_id', 'author','link_author']]
 ```
+
 gives us ![link_df](pictures/link_df.png)
+
+
+Following the pseudocode below, we can use `networkx`'s builtin function `nx.from_adjancency` to construct graph that allows us to manipulate
+```
+for row in link_df:
+    i, j = row[author], row[link_author]
+    adj_matrix[i,j] = adj_matrix[j,i] = 1 (except if i = j)
+G = nx.from_adjancency(adj_matrix)
+```
+### Finding shortest path
+
+We use `nx`'s builtin function to find shortest path length from each node to other nodes. Below are the results.
+
+We also filtered the data by excluding all the nodes with degree <= 1. We will consider those nodes as isolated nodes that have few connection to other nodes. It turns out this procedure not only saves running time but also maintains the data pattern.
+
+According to the results above, here are some plottings to better help us understand the data
+
+
+### Improving performance
+
+Since this network G is sparse in edges, we use `dijkstra` on each nodes instead of using `floyd-warshall` path finding algorithm. This improved our time complexity from `O(V^3)` to `O(VE Log V)`
+
+Consider `networkx` is intense on memory, we use `snap.py` to speed up the process.
+
+Here's how our model's performance increased on same amount of data (50% of main datasets):
+` Kernal dies (memory error) => ~330hrs (did not use nx) => 15hrs (dijkstra) => 1~2hr(snap.py on filtered data)`
+
+According to the results, we can answer research question 1 and 2:
+
+`q1:` We see that the chance for a path to exist increases as we have more nodes in the graph. However, it is not sufficient to conclude that the network is connected as a large component
+
+`q2:` We only see that as number of nodes increases, the avg path length increases. Hence, we can't say we have a small path length. The assumption is that the path length will remain increasing but capped at certain value (similar pattern as the log regression capped at 1).
+
+`further steps:` Perform same analysis on some sort of full dataset. Given the circumstance that my device can't handle the entire full dataset, we will take all posts under `PS5 (the smallest subreddit)` for analysis. We can consider processing the full dataset for a more comprehensive understanding once we get a powerful enough device, but not during this research.
+
+## Full Dataset
+
+
+
 	
 ## References that decided to use:
 
-Wikipedia
+[Wikipedia](https://en.wikipedia.org/wiki/Six_degrees_of_separation)
 
-papers on six handshake rule (to help build the model on Dijkstra)
+[floyd vs dijkstra](https://www.geeksforgeeks.org/comparison-dijkstras-floyd-warshall-algorithms/)
+
+[snap.py](https://snap.stanford.edu/snappy/)
+
+[networkx online QA](https://stackoverflow.com/questions/14011600/sorting-a-networkx-graph-object-python), 
+[networkx online QA2](https://stackoverflow.com/questions/50884035/networkx-calculating-and-storing-shortest-paths-on-a-graph-to-a-pandas-data-fra)
 
 Generalists and Specialists: Using Community Embeddings to Quantify Activity Diversity in Online Platforms by Isaac Waller and Ashton Anderson
 
