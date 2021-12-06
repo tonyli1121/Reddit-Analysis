@@ -403,15 +403,15 @@ According to the results above, here are some plottings to better help us unders
 
 All plotting code: [bottom of project(part1).ipynb](files/main_dataset_analysis.ipynb)
 
-![bar_1.png](pictures/bar_1.png)
-![bar_2.png](pictures/bar_2.png)
+![bar_1.png](pictures/bar_1.png)  ![bar_2.png](pictures/bar_2.png)
+
 ![pie_2.png](pictures/pie_2.png)
 
 ### 3.3 Insights to answer research questions
 
 Now we are able to answer `research question 4`.
 
-`Q4:` According to the first bar chart, we see that as we remove more active users, the % of existence decrease. This means that the active users are important in constructing network. **The more activer users we exclude, the less likely a path will exist.** Pie plotting on the full analysis after filtering the top1% further supported this. As the `% Existence` decreased from 99% to 55%. Hence, **the active users indeed act as an important role in connecting users together**. 
+`Q4:` According to the first bar chart, we see that as we remove more active users, the % of existence decrease. This means that the `active users` are `important in constructing network`. **The more activer users we exclude, the less likely a path will exist.** Pie plotting on the full analysis after filtering the top1% further supported this. As the `% Existence` decreased from 99% to 55%. Hence, **the active users indeed act as an important role in connecting users together**. 
 
 However, looking at the second bar chart, we see that among existed paths, avg(pathlen) did not change much after we remove top 1% active users. Hence, **the active users affect path length, but not as much as they connect users**
 
