@@ -134,9 +134,9 @@ Verify the hypothesis/research goals by
 
 ---
 
-## Working on Main Dataset
+## 1. Working on Main Dataset
 
-### Looking at the data
+### 1.1 Looking at the data
 
 To answer our first two questions, we will need to play around with the main datasets: main_comments and main_submissions. Here's some insights on the datasets.
 
@@ -177,7 +177,7 @@ Here we see that there are several rows in `domain` that are NaN, after looking 
     - We also notice that link_id (submission_id) starts with 't3_' and comment_id starts with 't1_'
 
 
-### Constructing graph
+### 1.2 Constructing graph
 
 if a commented b / vice-versa, then a is connected to b
 
@@ -215,11 +215,12 @@ G = nx.from_adjancency(adj_matrix)
 ```
 
 Below is an example of the largest component of comments.sample(100k)
+
 ![largest_component_100k](pictures/largest_component(100k).png)
 
 This shows that the points are connected with a small path length **in this component**, but disconnected with other nodes. Will this be the same case if we use more data?
 
-### Finding shortest path
+### 1.3 Finding shortest path
 
 We use `nx`'s builtin function to find shortest path length from each node to other nodes. Below are the results.
 
@@ -233,7 +234,7 @@ G1.DelDegKNodes(0,0)
 According to the results above, here are some plottings to better help us understand the data
 
 
-### Improving performance
+### 1.4 Improving performance
 
 Since this network G is sparse in edges, we use `dijkstra` on each nodes instead of using `floyd-warshall` path finding algorithm. This improved our time complexity from `O(V^3)` to `O(VE Log V)`
 
@@ -256,19 +257,31 @@ GRAPHS
 ```
 **% Existence** means the chance for path to exist given any two arbitrary nodes, it is given by (number of path)/(number of authors)**2
 
+### 1.5 Insights to answer research questions
+
 According to the results, we can answer research question 1 and 2:
 
-`q1:` We see that the chance for a path to exist increases as we have more nodes in the graph. However, it is not sufficient to conclude that the network is connected as a large component as we don't have data supporting us. (we stopped at 60% of main_dataset as otherwise memory error). Hence the conclusion is that: **The 'user chain' in main_dataset exists only if we filter out the isolated nodes**
+`Q1:` We see that the chance for a path to exist increases as we have more nodes in the graph. However, it is not sufficient to conclude that the network is connected as a large component as we don't have data supporting us. (we stopped at 60% of main_dataset as otherwise memory error). Hence the conclusion is that: **The 'user chain' in main_dataset exists only if we filter out the isolated nodes**
 
-`q2:` We only see that as number of nodes increases, the avg path length increases. Although the number is small, it does not represent the overall path length. **Hence, we have small path length among the existed paths, but it does not represent the overall path length as there's very few path existed in the graph.** 
+`Q2:` We only see that as number of nodes increases, the avg path length increases. Although the number is small, it does not represent the overall path length. **Hence, we have small path length among the existed paths, but it does not represent the overall path length as there's very few path existed in the graph.** 
 
 The assumption is that the path length will remain increasing but capped at certain value (similar pattern as the log regression capped at 1), which will require us to check in the `full dataset analysis` that uses the smallest subreddit for comprehensive understanding, and also using the entire full dataset for detailed analysis.
 
-`further steps:` Perform same analysis on some sort of full dataset. Given the circumstance that my device can't handle the entire full dataset, we will take all posts under `PS5 (the smallest subreddit)` for analysis. We can consider processing the full dataset for a more comprehensive understanding once we get a powerful enough device, but not during this research.
+### 1.6 Further steps 
 
-## Full Dataset
+(things not in this project, but could be done in future)
 
-Since `main_dataset` is **2% downsampled** from the full dataset, under large number it represents the distribution of subreddits.
+`Further steps:` Perform same analysis on some sort of full dataset. Given the circumstance that my device can't handle the entire full dataset, we will take all posts under `PS5 (the smallest subreddit)` for analysis. We can consider processing the full dataset for a more comprehensive understanding once we get a powerful enough device, but not during this research.
+
+---
+
+## 2. Full Dataset 
+
+[jupyter-notebook file (full_dataset_analysis.ipynb)](full_dataset_analysis.ipynb)
+
+### 2.1 Find smallest subreddit
+
+Since `main_dataset` is **2% downsampled** from the `full dataset`, under large number it represents the distribution of subreddits.
 ```
 # 5 subreddits with least posts
 main_comments = pd.read_csv('main_comments.csv.gz')
@@ -276,7 +289,9 @@ main_comments.gropuby('subreddit')['subreddit'].value_counts().sort_values().hea
 ```
 ![find_least_subreddit](pictures/find_least_subreddit.png)
 
-Then we load the comments and submissions data as below:
+### 2.2 Load data
+
+Then we load the `comments` and `submissions` data as below:
 ```
 start_date = datetime.date(2019, 1, 1)
 end_date = datetime.date(2021, 6, 30)
@@ -290,36 +305,94 @@ for i in tqdm(range((end_date - start_date).days)):
     PS5 = PS5.append(df.loc[df.subreddit == 'PS5'])
 ```
 
-We verified that snap works on sample(10k) and sample(50k):
+### 2.3 verify snap and filtering
 
-**% Existence** means the chance for path to exist given any two arbitrary nodes, it is given by (number of path)/(number of authors)**2
+We verified that `snap` works on sample(10k) and sample(50k):
+
+`% Existence` means the chance for path to exist given any two arbitrary nodes, it is given by `number of path`/`number of authors)**2`
 
 ![snap vs nx](pictures/snap_vs_nx.png)
 
-We also verified that filter out inactive (deg<=1) users is helpful (saves time, maintains pattern):
+We also verified that filter out `inactive (deg<=1) users` is helpful (saves time, maintains pattern):
 
 ![pie_full_verify]()
 
+### 2.4 Find Path
+
 Then perform similar analysis as above steps (use `snap` to find smallest path length). 
+
 ```
 GRAPHS
 ```
-	
-## References that decided to use:
+### 2.5 Insights to answer research questions
+
+Now we are able to answer `research question 3`.
+
+`Q3:` Under subreddit PS5, the users are strongly connected (>99% chance for path to exist between arbitrary users). Different from our hypothesis (pathlen ~= 4,5) the path length is 3.0. **Hence users are strongly connected with small path length under subreddits**
+
+### 2.6 Further steps 
+
+(things not in this project, but could be done in future)
+
+`Further Steps:` We could verify this on other subreddits in the future. The assumption is all subreddits follow same pattern.
+
+---
+
+## 3. Analyze active users
+
+### 3.1 Filter users
+
+We consider filter out the top 1%/5%/10%/25% most active users. Then take random 10%/15%/.../30% of users as subgraph to compare their result.
+
+```
+# filtering and subgraphing
+nodes = G.nodes() sorted by degree in descending order
+
+for i in [0.01, 0.05, 0.1, 0.25]:
+    # filter out top i% nodes
+    sub_nodes = nodes[len(nodes)*i:]
+    
+    # subgraph of 10%/15%/.../30% users (not use full to save time)
+    for j in [0.1, 0.15, ..., 0.3]:	
+	sub_G = G.subgraph(sub_nodes.sample(frac = j))
+        find shortest path length of each node in sub_G
+
+Compare all the results
+```
+It is also important for us to use some full data, so we also did
+
+```
+filter out top 1% most active users
+find path length on subgraph that exclude these nodes
+```
+
+### 3.2 Plotting
+
+```
+GRAPH
+```
+
+### 3.3 Insights to answer research questions
+
+Now we are able to answer `research question 4`.
+
+`Q4:` According to the first bar chart, we see that as we remove more active users, the % of existence decrease. This means that the active users are important in constructing network. **The more activer users we exclude, the less likely a path will exist.** Pie plotting on the full analysis after filtering the top1% further supported this. As the `% Existence` decreased from 99% to 55%. Hence, **the active users indeed act as an important role in connecting users together**. 
+
+However, looking at the second bar chart, we see that among existed paths, avg(pathlen) did not change much after we remove top 1% active users. Hence, **the active users affect path length, but not as much as they connect users**
+
+## References:
 
 [Wikipedia](https://en.wikipedia.org/wiki/Six_degrees_of_separation)
 
 [floyd vs dijkstra](https://www.geeksforgeeks.org/comparison-dijkstras-floyd-warshall-algorithms/)
 
 [snap.py](https://snap.stanford.edu/snappy/)
+[convert pandas to snap](https://stackoverflow.com/questions/51780621/converting-pandas-dataframe-to-snap-py)
 
 [networkx online QA](https://stackoverflow.com/questions/14011600/sorting-a-networkx-graph-object-python), 
 [networkx online QA2](https://stackoverflow.com/questions/50884035/networkx-calculating-and-storing-shortest-paths-on-a-graph-to-a-pandas-data-fra)
 
-Generalists and Specialists: Using Community Embeddings to Quantify Activity Diversity in Online Platforms by Isaac Waller and Ashton Anderson
+[Generalists and Specialists: Using Community Embeddings to Quantify Activity Diversity in Online Platforms by Isaac Waller and Ashton Anderson](http://csslab.cs.toronto.edu/gs/actdiv-www2019.pdf)
 
-	"We found a broad spectrum of user styles, from extreme generalists to extreme specialists, and observed that specialists are more likely to produce higher-quality replies"
-	
-will this supply any of the hypothesis (or is there any connection between the research result and the papers result?
 
 
