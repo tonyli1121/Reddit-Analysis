@@ -1,6 +1,6 @@
 # Reddit Analysis DataStory & Methodologies
 
-blog: https://tonyli1121.github.io/Reddit-Analysis/
+[Blog](https://tonyli1121.github.io/Reddit-Analysis/)
 
 ## Existence of "Six Degrees of Separation" on Reddit
 
