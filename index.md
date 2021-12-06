@@ -213,6 +213,12 @@ for row in link_df:
     adj_matrix[i,j] = adj_matrix[j,i] = 1 (except if i = j)
 G = nx.from_adjancency(adj_matrix)
 ```
+
+Below is an example of the largest component of comments.sample(100k)
+![largest_component_100k](pictures/largest_component(100k).png)
+
+This shows that the points are connected with a small path length **in this component**, but disconnected with other nodes. Will this be the same case if we use more data?
+
 ### Finding shortest path
 
 We use `nx`'s builtin function to find shortest path length from each node to other nodes. Below are the results.
@@ -237,15 +243,22 @@ Consider `networkx` is intense on memory, we use `snap.py` to speed up the proce
 
 ```
 import snap
+# we also avoided using cutoff because snap so efficient that not using cutoff won't waste too much time
 pathlen = G.GetShortPathAll(i)
 ```
 
 Here's how our model's performance increased on same amount of data (50% of main datasets):
-` Kernal dies (memory error) => ~330hrs (did not use nx) => 15hrs (dijkstra) => 1~2hr(snap.py on filtered data)`
+
+`Kernal dies (memory error) => ~330hrs (did not use nx) => 15hrs (dijkstra) => 1~2hr(snap.py on filtered data)`
+
+```
+GRAPHS
+```
+**% Existence** means the chance for path to exist given any two arbitrary nodes, it is given by (number of path)/(number of authors)**2
 
 According to the results, we can answer research question 1 and 2:
 
-`q1:` We see that the chance for a path to exist increases as we have more nodes in the graph. However, it is not sufficient to conclude that the network is connected as a large component. Hence the conclusion is that: **there does not exist a 'user chain' in main_dataset**
+`q1:` We see that the chance for a path to exist increases as we have more nodes in the graph. However, it is not sufficient to conclude that the network is connected as a large component as we don't have data supporting us. (we stopped at 60% of main_dataset as otherwise memory error). Hence the conclusion is that: **The 'user chain' in main_dataset exists only if we filter out the isolated nodes**
 
 `q2:` We only see that as number of nodes increases, the avg path length increases. Although the number is small, it does not represent the overall path length. **Hence, we have small path length among the existed paths, but it does not represent the overall path length as there's very few path existed in the graph.** 
 
@@ -255,8 +268,42 @@ The assumption is that the path length will remain increasing but capped at cert
 
 ## Full Dataset
 
+Since `main_dataset` is **2% downsampled** from the full dataset, under large number it represents the distribution of subreddits.
+```
+# 5 subreddits with least posts
+main_comments = pd.read_csv('main_comments.csv.gz')
+main_comments.gropuby('subreddit')['subreddit'].value_counts().sort_values().head(5)
+```
+![find_least_subreddit](pictures/find_least_subreddit.png)
 
+Then we load the comments and submissions data as below:
+```
+start_date = datetime.date(2019, 1, 1)
+end_date = datetime.date(2021, 6, 30)
+delta = datetime.timedelta(days=1)
+PS5 = pd.DataFrame()
 
+for i in tqdm(range((end_date - start_date).days)):  
+    url_name = 'http://csslab.cs.toronto.edu/cscd25/full/comments_' + str(start_date + i*delta) +'.csv.gz'
+    df = pd.read_csv(url_name)    
+    df = df[df.author != '[deleted]' & df.author != 'AutoModerator'] # exclude [deleted] and [auto moderator]
+    PS5 = PS5.append(df.loc[df.subreddit == 'PS5'])
+```
+
+We verified that snap works on sample(10k) and sample(50k):
+
+**% Existence** means the chance for path to exist given any two arbitrary nodes, it is given by (number of path)/(number of authors)**2
+
+![snap vs nx](pictures/snap_vs_nx.png)
+
+We also verified that filter out inactive (deg<=1) users is helpful (saves time, maintains pattern):
+
+![pie_full_verify]()
+
+Then perform similar analysis as above steps (use `snap` to find smallest path length). 
+```
+GRAPHS
+```
 	
 ## References that decided to use:
 
