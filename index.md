@@ -148,7 +148,7 @@ To answer our first two questions, we will need to play around with the main dat
 
 ![main_submissions_dataframe](pictures/main_submissions.png)
 
-Here we see that there are several rows in `domain` that are NaN, after looking into the data, we dropped these rows because they have little influence on the data.
+Here we see that there are several rows in `domain` that are `NaN`, after looking into the data, we dropped these rows because they have little influence on the data.
 
 ![submissions_nan](pictures/submissions_nan.png)
 
@@ -252,10 +252,12 @@ Here's how our model's performance increased on same amount of data (50% of main
 
 `Kernal dies (memory error) => ~330hrs (did not use nx) => 15hrs (dijkstra) => 1~2hr(snap.py on filtered data)`
 
+Evidence that using filtered data g
+
 ```
 GRAPHS
 ```
-**% Existence** means the chance for path to exist given any two arbitrary nodes, it is given by (number of path)/(number of authors)**2
+`% Existence` means the chance for path to exist given any two arbitrary nodes, it is given by `number of path`/`(number of authors)**2`
 
 ### 1.5 Insights to answer research questions
 
