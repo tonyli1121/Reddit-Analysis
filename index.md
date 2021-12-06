@@ -99,9 +99,112 @@ Verify the hypothesis/research goals by
 
 # Datastory of Analysis
 
-# TBA
+Based on the time that the main_datasets and full_datasets come out, we first analyzed the `main-dataset`. Our `goal` is to `find the shortest path length` of a node to other nodes and `the chance for it to exist`. To do this, we have to build some `graph` and apply the path finding algorithms.
+
+We first considered to construct the graph by mannually read every connection and input into a `adjacency matrix`. It turns out that although this method is `correct`, it `takes too much time` running. And after hours of searching, we see that `networkx` is a proper choice here as it allows us to read graph from `edge_list` which we already have. However, it is still not fast enough as `networkx` is intensive on memory and under suggestion from Professor Anderson, we chose to use `snap.py` to support the graph.
+
+To avoid running time being too long, we used a `subsample of 100k` data frist to analyze the dataset and verify the performance of the algorithms. And if possible, we can just use the result of `100k` data if it makes enough sense.
+
+```
+data = comments.sample(100k)
+```
+Unfotunately, the `100k` data is very spreaded and only helped us verify our algorithms. It only has 3282 effective authors (authors that we have reference in the dataset) and every author is quite disconnected from others.
+
+![largest_component_100k](pictures/largest_component(100k).png)
+
+The `largest component` of `100k` does not contain many nodes in it, meaning it is `disconnected` (a graph with multiple components). Since if every node is connected, we will have a large component that's almost same as the original graph, so far we have `no progress` on `verifying our hypothesis`.
+
+![data_100k](pictures/data_100k.png)
+
+_The `% path existence` is calculated by `nonzero`/`number of authors ** 2`, meaning out of an adjancency matrix of NxN, how many entries are filled with path length._
+
+However, although it did not help us verify the hypothesis, it tells us there's potential for large amount of nodes having `degree = 1` which we should be explicitly `careful` with, as these nodes are kinda isolated from the graph. (they act like the leaves in tree data structure, which does not help us connecting the graph)
+
+**roles deg = 1 nodes**
+
+![tree_deg_1_nodes](pictures/tree_deg_1_nodes.png)
+
+And in fact when we take more data (50% of main dataset), 
+
+`data = comments.sample(frac = 0.5)`
+
+we see the large impact of these `inactive users` (in fact, they might not be inactive, we probably just missed their data from the dataset, but for convenience, we just call them inactive for now). The `percentage of path existence differs a lot`, after we filtered out the inactive users, the `chance for path to exist increased` by a large percentage.
+
+![pie_1](pictures/pie_1.png)
+
+Thus the result supported us that we should filter out the `inactive users`.
+
+We now want to see the pattern of data with respect to the sample % and number of nodes in the graph.
+
+```
+for i in [0.01, 0.03, ..., 0.5]:
+    data = comments.sample(frac = i)
+    analyze "data"
+```
+
+which gives us the following visualizations.
+
+**As the % increases, the number of nodes increases (a trivial finding)**
+
+![scatter_3.png](pictures/scatter_3.png)
+
+**As sample%/node# increases, the `% Existence` and `avg length` both increases. It looks like the `avg path` will stop increasing once we reach some threshold.**
+
+![scatter_1.png](pictures/scatter_1.png)
+
+![scatter_2.png](pictures/scatter_2.png)
+
+The `% existence` looks linear w.r.t. to x axis, but it is very likely that under large dataset it will follow same slope as the log regression (suddenly increase at some value, then stop increasing and capped at 1).
+
+The `avg path` looks like the `left half` of a `quadratic function that opens downward`, it increases fast at beginning, and capped at some value once we reach the threshold.
+
+```
+Given the facts that 1) we can't run entire main_dataset (memory error). 2) Performance not as good as expected
+We step forward to use the full_dataset to proceed our analysis.
+```
+
+Of course we will not be using the entire full_dataset, we took the subreddit with least amount of data in main_dataset (`PS5`). Since main_dataset is randomly 2% sampled from full_dataset, the distribution should be the same under such a large number (by Law of Large Number).
+
+We repeat the same process as before and here's what we see on the full_dataset. 
+
+![box_1.png](pictures/box_1.png)
+
+![pie_3.png](pictures/pie_3.png)
+
+The `% Existence` is >99% with the `avg path length` centred at 3 with `low std.`
+
+From the pie chart, we also see that `no matter` if we filter the `inactive` users, the `% Existence` remains almost same, meaning the graph is `well-defined` (nodes don't have negative impact on constructing path)
+
+These are both signs of successfully verifying the hypothesis. Now we are just interested in how the `active` users affect the network (the `active users` are the users with `high degree` <= they either commented to lots posts, or posted popular submissions)
+
+We filter out the top 1%/5%/10%/25% most active users, then rdomly take 10%/15%/.../30% subgraph. Below is a simple example to represent the process. The `hypothesis` is that both `% Existence` because structure breaks, `Path length` decreases, because the `path length` in small component should be `smaller`
+
+[remove_top_degree_before](pictures/remove_top_degree.png) -> [remove_top_degree_after](pictures/remove_top_degree_2.png)
+
+Using the idea, we get the below analysis result.
+
+**The more active users we remove, the harded it is to construct graph**
+
+![bar_1.png](pictures/bar_1.png) 
+
+**Removing top 1% active users has `few impact on path length` (among the existed ones), but `decreases % Existence` by a lot**
+
+![bar_2.png](pictures/bar_2.png)
+
+![pie_2.png](pictures/pie_2.png)
+
+This is the end of datastory, thank you for your patience. We see that 
+
+```
+1) Under subreddits, the authors are connected with small path length
+2) It is likely that under the entire dataset, we have same pattern as 1)
+3) The active users are important in constructing the graph.
+4) The active users are NOT important in making path length small.
+```
 
 ---
+
+
 
 # Methodologies of Analysis
 
@@ -119,7 +222,6 @@ Verify the hypothesis/research goals by
 - load and process full dataset
 - analysis on research question 3 and 4
 ```
-
 
 
 ## 1. Working on Main Dataset
