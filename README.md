@@ -1,5 +1,7 @@
 # Reddit Analysis DataStory & Methodologies
 
+blog: https://tonyli1121.github.io/Reddit-Analysis/
+
 ## Existence of "Six Degrees of Separation" on Reddit
 
 This is a research project from CSCD25 (Advanced Data Analysis) supervised by Professor Anderson and TA Waller.
