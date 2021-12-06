@@ -76,7 +76,7 @@ Here are a list of research questions:
 
 ## Hypothesis:
 	
-1. There is a "Small world"/"Six Handshake Rule" between users
+1. There is a "Small world"/"Six Handshake Rule" relationshipt between users (all connected)
 2. The average path length is ~6 
 3. Yes, smaller cluster has smaller path length
 	3.1 There also exists path between users under subreddits
@@ -116,7 +116,7 @@ The `largest component` of `100k` does not contain many nodes in it, meaning it 
 
 ![data_100k](pictures/data_100k.png)
 
-_The `% path existence` is calculated by `nonzero`/`number of authors ** 2`, meaning out of an adjancency matrix of NxN, how many entries are filled with path length._
+_The `% path existence` is calculated by `nonzero` / `number of authors ** 2`, meaning out of an adjancency matrix of NxN, how many entries are filled with path length._
 
 However, although it did not help us verify the hypothesis, it tells us there's potential for large amount of nodes having `degree = 1` which we should be explicitly `careful` with, as these nodes are kinda isolated from the graph. (they act like the leaves in tree data structure, which does not help us connecting the graph)
 
