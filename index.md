@@ -193,7 +193,7 @@ Using the idea, we get the below analysis result.
 
 ![pie_2.png](pictures/pie_2.png)
 
-This is the end of datastory, thank you for your patience. We see that 
+We see that 
 
 ```
 1) Under subreddits, the authors are connected with small path length
@@ -202,9 +202,45 @@ This is the end of datastory, thank you for your patience. We see that
 4) The active users are NOT important in making path length small.
 ```
 
+## Insights from the datastory!!!
+
+1. **The `small world` exists in any society with large user base and some kind of connection between users
+
+As what we expected, there is a `large component` that contains all authors. In other words, the `community of Reddit` is a `small world` such that everyone can reach others in small number of steps.
+
+According to the theoratical findings in [Six Degrees of Separation in Online Society](https://www.researchgate.net/publication/255614427_Six_Degrees_of_Separation_in_Online_Society) that had been supported by multiple mathematic models and measurements, accompanied with the large user base of reddit ([user stats of reddit](https://www.statista.com/statistics/443332/reddit-monthly-visitors/)). We could conclude that the `small world` does `not only` exist in the world-famous online societies like Reddit/Facebook/..., `but also` is presented in any society that has a large amount of user base and some sort of connection that connects everyone (in Reddit: 'comment', in Twitter: 'follow', in Facebook: 'friends',...)
+
+2. **The role of active users is `not` connecting individual users, `but` instead connecting components!!**
+
+Initially we thought that by removing the active users, we will have the connection broken and path length decreased. However, after the analysis, we see that only the `connection` is affected by the active users. The idea behind is that although the `single large component` structure is broken, every new (sub)components are still large enough that follows the trend of average path length. The `Six degree of seperation` theory still holds under each component except that we can't reach nodes from one component from other components.
+```
+(component_A) <--> active user <--> (component_B) 
+>>> every nodes in the graph is connected, form a large component
+
+>>> By removing activer users, we get 
+(component_A) | (component_B)
+>>> The nodes under each component are still connected, hence pathlength remains almost same.
+>>> However, since we can't reach component_B from component_A, the % Existence decreases.
+```
+
+According to the idea above, the active users is in fact `not` acting as connection `between individual users`, but instead a `bridge` `between the components` (groups of users).
+
+**We argue that the `active users are mostly from submissions authors`**
+
+Think about changing the graph into a `directed` graph, that is (a -> b if a commented b). Then by our previous definition on active users, the `active users` are expected to come `from the submission authors` more than the comments authors. Why? Because we defined the active users by their degree, and the submission authors can receive hundreds of comments from one single post (`i.e., submissions authors deg += >100 for one action`) while the comment authors can only raise their degree by `1 for one action`. Hence, the active users will be mostly from the submissions authors.
+
+**Now we see why only `% Existence` changed**
+
+Consider the `active users as the submission authors`, if we remove them from the graph, the `component` structure is broken as for each submission authors, there are a lot of comment authors connected with it. Like the `root` of a tree, although there are still sub-trees, the large tree structure is broken.
+
+Recall how we visualized a path in the `research question`? When we remove the active user, we are removing the root, leaving a lot of subtrees connected internally but disconnected from each other. 
+
+`Therefore`, as we remove the active user, we are removing the root, leaving a lot of subtrees connected internally but disconnected from each other. This is `why the path length did not change much`, we are `just changing level of tree by 1` when we remove the root. However, the `% Existence` changed by a lot because every `subtree is disconnected with each other` now.
+
 ---
 
 
+ what will happen? Yes, And 
 
 # Methodologies of Analysis
 
@@ -386,9 +422,9 @@ All plotting code: [bottom of project(part1).ipynb](files/main_dataset_analysis.
 
 According to the results, we can answer research question 1 and 2:
 
-`Q1:` We see that the `chance for a path to exist` `increases` as we have `more nodes` in the graph. However, it is not sufficient to conclude that the network is connected as a large component as we don't have data supporting us. (we stopped at 60% of main_dataset as otherwise memory error). Hence the `conclusion` is that: **The 'user chain' in main_dataset exists only if we filter out the isolated nodes**
+`Q1:` We see that the `chance for a path to exist` `increases` as we have `more nodes` in the graph. However, it is not sufficient to conclude that the network is connected as a large component as we don't have data supporting us. (we stopped at 60% of main_dataset as otherwise memory error). Hence the `conclusion` is that: **The 'user chain' in main_dataset is very likely to exist only if we filter out the isolated nodes**
 
-`Q2:` We only see that as `number of nodes increases`, the `avg path length increases`, but does not have an absolute idea on what the overall path length will be as the value is still increasing. Hence, the `conclusion` is that: **we have small path length among the existed paths, but we still need to verify with more detailed dataset.** 
+`Q2:` We only see that as `number of nodes increases`, the `avg path length increases`, but does not have an absolute idea on what the overall path length will be as the value is still increasing (it is likely that the value will be capped at some threshold). Hence, the `conclusion` is that: **we have small path length among the existed paths, but we still need to verify with more detailed dataset.** 
 
 The `assumption` is that the `path length` will remain increasing but `capped at certain value`, which will require us to check in the `full dataset analysis` that uses the smallest subreddit for comprehensive understanding, and also using the entire full dataset for detailed analysis.
 
@@ -540,6 +576,8 @@ However, looking at the second bar chart, we see that among existed paths, `avg(
 
 [Generalists and Specialists: Using Community Embeddings to Quantify Activity Diversity in Online Platforms by Isaac Waller and Ashton Anderson](http://csslab.cs.toronto.edu/gs/actdiv-www2019.pdf)
 
+[Zhang, Lei & Tu, Wanqing. (2009). Six Degrees of Separation in Online Society. ](https://www.researchgate.net/publication/255614427_Six_Degrees_of_Separation_in_Online_Society)
+
 ---
 
 # Summary
@@ -549,9 +587,9 @@ However, looking at the second bar chart, we see that among existed paths, `avg(
 [project(part2).ipynb](files/full_dataset_analysis.ipynb)
 
 
-`Q1:` We see that the `chance for a path to exist` `increases` as we have `more nodes` in the graph. However, it is not sufficient to conclude that the network is connected as a large component as we don't have data supporting us. (we stopped at 60% of main_dataset as otherwise memory error). Hence the `conclusion` is that: **The 'user chain' in main_dataset exists only if we filter out the isolated nodes**
+`Q1:` We see that the `chance for a path to exist` `increases` as we have `more nodes` in the graph. However, it is not sufficient to conclude that the network is connected as a large component as we don't have data supporting us. (we stopped at 60% of main_dataset as otherwise memory error). Hence the `conclusion` is that: **The 'user chain' in main_dataset is very likely to exist only if we filter out the isolated nodes**
 
-`Q2:` We only see that as `number of nodes increases`, the `avg path length increases`, but does not have an absolute idea on what the overall path length will be as the value is still increasing. Hence, the `conclusion` is that: **we have small path length among the existed paths, but we still need to verify with more detailed dataset.** 
+`Q2:` We only see that as `number of nodes increases`, the `avg path length increases`, but does not have an absolute idea on what the overall path length will be as the value is still increasing (it is likely that the value will be capped at some threshold). Hence, the `conclusion` is that: **we have small path length among the existed paths, but we still need to verify with more detailed dataset.** 
 
 The `assumption` is that the `path length` will remain increasing but `capped at certain value`, which will require us to check in the `full dataset analysis` that uses the smallest subreddit for comprehensive understanding, and also using the entire full dataset for detailed analysis.
 
