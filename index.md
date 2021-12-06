@@ -225,13 +225,13 @@ We see that
 
 ## 2. Insights from the datastory
 
-1. **The `small world` exists in any society with large user base and some kind of connection between users
+### 1. The `small world` exists in any society with large user base and some kind of connection between users
 
 As what we expected, there is a `large component` that contains all authors. In other words, the `community of Reddit` is a `small world` such that everyone can reach others in small number of steps.
 
 According to the theoratical findings in [Six Degrees of Separation in Online Society](https://www.researchgate.net/publication/255614427_Six_Degrees_of_Separation_in_Online_Society) that had been supported by multiple mathematic models and measurements, accompanied with the large user base of reddit ([user stats of reddit](https://www.statista.com/statistics/443332/reddit-monthly-visitors/)). We could conclude that the `small world` does `not only` exist in the world-famous online societies like Reddit/Facebook/..., `but also` is presented in any society that has a large amount of user base and some sort of connection that connects everyone (in Reddit: 'comment', in Twitter: 'follow', in Facebook: 'friends',...)
 
-2. **The role of active users is `not` connecting individual users, `but` instead connecting components!!**
+### 2. The role of active users is `not` connecting individual users, `but` instead connecting components
 
 Initially we thought that by removing the active users, we will have the connection broken and path length decreased. However, after the analysis, we see that only the `connection` is affected by the active users. The idea behind is that although the `single large component` structure is broken, every new (sub)components are still large enough that follows the trend of average path length. The `Six degree of seperation` theory still holds under each component except that we can't reach nodes from one component from other components.
 ```
@@ -259,9 +259,6 @@ Recall how we visualized a path in the `research question`? When we remove the a
 `Therefore`, as we remove the active user, we are removing the root, leaving a lot of subtrees connected internally but disconnected from each other. This is `why the path length did not change much`, we are `just changing level of tree by 1` when we remove the root. However, the `% Existence` changed by a lot because every `subtree is disconnected with each other` now.
 
 ---
-
-
- what will happen? Yes, And 
 
 # Methodologies of Analysis
 
