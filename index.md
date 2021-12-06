@@ -461,18 +461,20 @@ The `assumption` is that the `path length` will remain increasing but `capped at
 
 # Future work
 
+If can get more powerful device, try running with completely full dataset to verify hypothesis and assumption we had throughout the research.
+
+During this research, there's not enough evidence to say anything about the roles of generalist and specialist. In future we can consider focusing on the connection between the research and the paper.
+
+Since it is very likely that we can't run the full dataset on any personal devices, also consider to build some algorithm. The algorithm should be able to predict the avg path length of a user to other users.
 ```
-- if can get more powerful device, try running with completely full dataset to verify hypothesis and assumption we had throughout the research.
-- during this research, there's not enough evidence to say anything about the roles of generalist and specialist. In future we can consider focusing on the connection between the research and the paper.
-- since it is very likely that we can't run the full dataset on any personal devices, also consider to build some algorithm. The algorithm should be able to predict the avg path length of a user to other users.
-    - we dont need to predict % existence as we already found that the users can become one large component.
-    - this is actually one of my research goals at the beginning, but was abondoned because it will require way too much work.
-    - features to consider? word freq, scores (avg score the author earned), # of authors connected.
-    - models to consider? decision tree, lin. regression on # of authors and scores.
+- we dont need to predict % existence as we already found that the users can become one large component.
+- this is actually one of my research goals at the beginning, but was abondoned because it will require way too much work.
+- features to consider? word freq, scores (avg score the author earned), # of authors connected.
+- models to consider? decision tree, lin. regression on # of authors and scores.
 ```
 
 ---
 
-This is the end of my research datastory and methodologies, I have attached the links to all my working files under the topic `Methodologies`. If there's anything about the project that interests you, please do not hesitate to contact me at tonyli.li@mail.utoronto.ca
+This is the end of my research datastory and methodologies, I have attached the links to all my working files under the topic `Methodologies` and `Summary`. If there's anything about the project that interests you, please do not hesitate to contact me at tonyli.li@mail.utoronto.ca
 
 Thanks for your patience.
