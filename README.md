@@ -1,4 +1,4 @@
-# Reddit Analysis DataStory & Methodologies, Tianxiao Li
+# Reddit Analysis DataStory & Methodologies
 
 ## Existence of "Six Degrees of Separation" on Reddit
 
