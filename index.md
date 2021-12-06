@@ -260,6 +260,10 @@ Recall how we visualized a path in the `research question`? When we remove the a
 
 ---
 
+This is the end of datastory, thanks for your patience.
+
+---
+
 # Methodologies of Analysis
 
 [project(part1).ipynb](files/main_dataset_analysis.ipynb)
