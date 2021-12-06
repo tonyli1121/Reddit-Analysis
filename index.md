@@ -330,7 +330,7 @@ GRAPHS
 
 Now we are able to answer `research question 3`.
 
-`Q3:` Under subreddit PS5, the users are strongly connected (>99% chance for path to exist between arbitrary users). Different from our hypothesis (pathlen ~= 4,5) the path length is 3.0. **Hence users are strongly connected with small path length under subreddits**
+`Q3:` Under subreddit PS5, the users are strongly connected (>99% chance for path to exist between arbitrary users). Different from our hypothesis (pathlen ~= 4,5) the average path length is 3.0. **Hence users are strongly connected with small path length under subreddits**
 
 ### 2.6 Further steps 
 
