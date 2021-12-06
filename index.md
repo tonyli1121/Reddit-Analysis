@@ -4,6 +4,25 @@
 
 This is a research project from CSCD25 (Advanced Data Analysis) supervised by Professor Anderson and TA Waller.
 
+It contains the following sections
+
+```
+- Abstract
+- Research Question
+- Hypothesis
+- Data Story
+    1. Research Analysis
+    2. Insights
+- Methodologies
+    1. Main dataset analysis
+    2. Full dataset analysis
+    3. Analysis on active users
+- References
+- Future Work
+```
+
+Details are here in the `jupyter-notebook` files: [part_1](files/main_dataset_analysis.ipynb), [part_2](files/full_dataset_analysis.ipynb)
+
 ---
 
 ## Abstract
@@ -98,6 +117,8 @@ Verify the hypothesis/research goals by
 ---
 
 # Datastory of Analysis
+
+## 1. Research Analysis
 
 Based on the time that the main_datasets and full_datasets come out, we first analyzed the `main-dataset`. Our `goal` is to `find the shortest path length` of a node to other nodes and `the chance for it to exist`. To do this, we have to build some `graph` and apply the path finding algorithms.
 
@@ -202,7 +223,7 @@ We see that
 4) The active users are NOT important in making path length small.
 ```
 
-## Insights from the datastory!!!
+## 2. Insights from the datastory
 
 1. **The `small world` exists in any society with large user base and some kind of connection between users
 
@@ -262,7 +283,7 @@ Recall how we visualized a path in the `research question`? When we remove the a
 
 ## 1. Working on Main Dataset
 
-[main_dataset_analysis (project(part1).ipynb)](files/main_dataset_analysis.ipynb)
+[project(part1)](files/main_dataset_analysis.ipynb)
 
 ### 1.1 Looking at the data
 
@@ -408,7 +429,7 @@ On full dataset:
 
 According to the results above, here are some plottings to better help us understand the data. 
 
-All plotting code: [bottom of project(part1).ipynb](files/main_dataset_analysis.ipynb)
+All plotting code: [bottom of project(part1)](files/main_dataset_analysis.ipynb)
 
 ![scatter_1.png](pictures/scatter_1.png)
 
@@ -438,7 +459,7 @@ The `assumption` is that the `path length` will remain increasing but `capped at
 
 ## 2. Full Dataset 
 
-[full_dataset_analysis (project(part2).ipynb)](files/full_dataset_analysis.ipynb)
+[project(part2).ipynb](files/full_dataset_analysis.ipynb)
 
 ### 2.1 Find smallest subreddit
 
@@ -493,7 +514,7 @@ use snap to find shortest path length
 
 According to the results above, here are some plottings to better help us understand the data. 
 
-All plotting code: [bottom of project(part1).ipynb](files/main_dataset_analysis.ipynb)
+All plotting code: [bottom of project(part1)](files/main_dataset_analysis.ipynb)
 
 ![box_1.png](pictures/box_1.png)
 
@@ -515,7 +536,7 @@ Now we are able to answer `research question 3`.
 
 ## 3. Analyze active users
 
-[bottom of full_dataset_analysis (project(part2).ipynb)](files/full_dataset_analysis.ipynb)
+[project(part2).ipynb](files/full_dataset_analysis.ipynb)
 
 ### 3.1 Filter users
 
@@ -548,7 +569,7 @@ find path length on subgraph that exclude these nodes
 
 According to the results above, here are some plottings to better help us understand the data. 
 
-All plotting code: [bottom of project(part1).ipynb](files/main_dataset_analysis.ipynb)
+All plotting code: [bottom of project(part1)](files/main_dataset_analysis.ipynb)
 
 ![bar_1.png](pictures/bar_1.png)  ![bar_2.png](pictures/bar_2.png)
 
