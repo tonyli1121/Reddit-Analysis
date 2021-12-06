@@ -1,43 +1,6 @@
-## Reddit Analysis DataStory, Tianxiao Li
+# Reddit Analysis DataStory & Methodologies, Tianxiao Li
 
-You can use the [editor on GitHub](https://github.com/tonyli1121/Reddit-Analysis/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
-
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
-
-### Markdown
-
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
-
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [Basic writing and formatting syntax](https://docs.github.com/en/github/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/tonyli1121/Reddit-Analysis/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
-
-
-# Existence of "Six Degrees of Separation" on Reddit - Potential of Quick Information Flow
+## Existence of "Six Degrees of Separation" on Reddit
 
 This is a research project from CSCD25 (Advanced Data Analysis) supervised by Professor Anderson and TA Waller.
 
@@ -134,7 +97,34 @@ Verify the hypothesis/research goals by
 
 ---
 
+# Datastory of Analysis
+
+# TBA
+
+---
+
+# Methodologies of Analysis
+
+[project(part1).ipynb](files/main_dataset_analysis.ipynb)
+
+```
+- processing main datasets
+- analysis on research question 1 and 2
+- plotting on all generated results
+```
+
+[project(part2).ipynb](files/full_dataset_analysis.ipynb)
+
+```
+- load and process full dataset
+- analysis on research question 3 and 4
+```
+
+
+
 ## 1. Working on Main Dataset
+
+[main_dataset_analysis (project(part1).ipynb)](files/main_dataset_analysis.ipynb)
 
 ### 1.1 Looking at the data
 
@@ -203,7 +193,9 @@ comments.merge(id_author, left_on='link_id', right_on='link_id', inplace=True)
 link_df = comments[['id','link_id', 'author','link_author']]
 ```
 
-gives us ![link_df](pictures/link_df.png)
+gives us 
+
+![link_df](pictures/link_df.png)
 
 
 Following the pseudocode below, we can use `networkx`'s builtin function `nx.from_adjancency` to construct graph that allows us to manipulate
@@ -214,11 +206,25 @@ for row in link_df:
 G = nx.from_adjancency(adj_matrix)
 ```
 
+We will take subproportion of data to see the pattern (sample(1%~50%))
+
 Below is an example of the largest component of comments.sample(100k)
+
+```
+G = nx.from_pandas_adjacency(author_matrix)
+
+components = sorted(nx.connected_components(G), key=len, reverse=True)
+largest_component = components[0]
+
+nx.draw_spring(G.subgraph(largest_component))
+```
 
 ![largest_component_100k](pictures/largest_component(100k).png)
 
-This shows that the points are connected with a small path length **in this component**, but disconnected with other nodes. Will this be the same case if we use more data?
+We see that as we choose more data (sample percentage), the number of authors increases as well.
+
+![scatter_3.png](pictures/scatter_3.png)
+
 
 ### 1.3 Finding shortest path
 
@@ -230,9 +236,6 @@ We also filtered the data by excluding all the nodes with degree <= 1. We will c
 G1.DelDegKNodes(1,1)
 G1.DelDegKNodes(0,0)    
 ```
-
-According to the results above, here are some plottings to better help us understand the data
-
 
 ### 1.4 Improving performance
 
@@ -250,26 +253,36 @@ pathlen = G.GetShortPathAll(i)
 
 Here's how our model's performance increased on same amount of data (50% of main datasets):
 
-`Kernal dies (memory error) => ~330hrs (did not use nx) => 15hrs (dijkstra) => 1~2hr(snap.py on filtered data)`
+`Kernal dies (memory error) => ~15hrs (solved memory error) => 3hrs (using snap)`
 
-Evidence that using filtered data g
+On full dataset:
 
-```
-GRAPHS
-```
+`Kernal dies => 330hrs => 55hrs (using snap)`
+
+### 1.5 Plottings
+
+According to the results above, here are some plottings to better help us understand the data. 
+
+All plotting code: [bottom of project(part1).ipynb](files/main_dataset_analysis.ipynb)
+
+![scatter_1.png](pictures/scatter_1.png)
+
+![scatter_2.png](pictures/scatter_2.png)
+
 `% Existence` means the chance for path to exist given any two arbitrary nodes, it is given by `number of path`/`(number of authors)**2`
 
-### 1.5 Insights to answer research questions
+
+### 1.6 Insights to answer research questions
 
 According to the results, we can answer research question 1 and 2:
 
-`Q1:` We see that the chance for a path to exist increases as we have more nodes in the graph. However, it is not sufficient to conclude that the network is connected as a large component as we don't have data supporting us. (we stopped at 60% of main_dataset as otherwise memory error). Hence the conclusion is that: **The 'user chain' in main_dataset exists only if we filter out the isolated nodes**
+`Q1:` We see that the chance for a path to exist `increases` as we have `more nodes` in the graph. However, it is not sufficient to conclude that the network is connected as a large component as we don't have data supporting us. (we stopped at 60% of main_dataset as otherwise memory error). Hence the conclusion is that: **The 'user chain' in main_dataset exists only if we filter out the isolated nodes**
 
-`Q2:` We only see that as number of nodes increases, the avg path length increases. Although the number is small, it does not represent the overall path length. **Hence, we have small path length among the existed paths, but it does not represent the overall path length as there's very few path existed in the graph.** 
+`Q2:` We only see that as `number of nodes increases`, the `avg path length increases`, but does not have an absolute idea on what the overall path length will be as the value is still increasing. **Hence, we have small path length among the existed paths, but we still need to verify with more detailed dataset.** 
 
-The assumption is that the path length will remain increasing but capped at certain value (similar pattern as the log regression capped at 1), which will require us to check in the `full dataset analysis` that uses the smallest subreddit for comprehensive understanding, and also using the entire full dataset for detailed analysis.
+The `assumption` is that the `path length` will remain increasing but `capped at certain value`, which will require us to check in the `full dataset analysis` that uses the smallest subreddit for comprehensive understanding, and also using the entire full dataset for detailed analysis.
 
-### 1.6 Further steps 
+### 1.7 Further steps 
 
 (things not in this project, but could be done in future)
 
@@ -279,7 +292,7 @@ The assumption is that the path length will remain increasing but capped at cert
 
 ## 2. Full Dataset 
 
-[jupyter-notebook file (full_dataset_analysis.ipynb)](full_dataset_analysis.ipynb)
+[full_dataset_analysis (project(part2).ipynb)](files/full_dataset_analysis.ipynb)
 
 ### 2.1 Find smallest subreddit
 
@@ -317,30 +330,46 @@ We verified that `snap` works on sample(10k) and sample(50k):
 
 We also verified that filter out `inactive (deg<=1) users` is helpful (saves time, maintains pattern):
 
-![pie_full_verify]()
+![pie_3.png](pictures/pie_3.png)
 
 ### 2.4 Find Path
 
 Then perform similar analysis as above steps (use `snap` to find smallest path length). 
 
 ```
-GRAPHS
+G1.DelDegKNodes(1,1)
+G1.DelDegKNodes(0,0)    
+
+use snap to find shortest path length
 ```
-### 2.5 Insights to answer research questions
+
+### 2.5 Plottings
+
+According to the results above, here are some plottings to better help us understand the data. 
+
+All plotting code: [bottom of project(part1).ipynb](files/main_dataset_analysis.ipynb)
+
+![box_1.png](pictures/box_1.png)
+
+![pie_3.png](pictures/pie_3.png)
+
+### 2.6 Insights to answer research questions
 
 Now we are able to answer `research question 3`.
 
-`Q3:` Under subreddit PS5, the users are strongly connected (>99% chance for path to exist between arbitrary users). Different from our hypothesis (pathlen ~= 4,5) the average path length is 3.0. **Hence users are strongly connected with small path length under subreddits**
+`Q3:` Under subreddit PS5, the users are `strongly connected` (>99% chance for path to exist between arbitrary users). Different from our hypothesis (pathlen ~= 4, 5) the average path length is `~3.0`. **Hence users are strongly connected with small path length under subreddits**
 
-### 2.6 Further steps 
+### 2.7 Further steps 
 
 (things not in this project, but could be done in future)
 
-`Further Steps:` We could verify this on other subreddits in the future. The assumption is all subreddits follow same pattern.
+`Further Steps:` We could verify this on other subreddits in the future. The `assumption` is all subreddits follow `same pattern`.
 
 ---
 
 ## 3. Analyze active users
+
+[bottom of full_dataset_analysis (project(part2).ipynb)](files/full_dataset_analysis.ipynb)
 
 ### 3.1 Filter users
 
@@ -370,9 +399,13 @@ find path length on subgraph that exclude these nodes
 
 ### 3.2 Plotting
 
-```
-GRAPH
-```
+According to the results above, here are some plottings to better help us understand the data. 
+
+All plotting code: [bottom of project(part1).ipynb](files/main_dataset_analysis.ipynb)
+
+![bar_1.png](pictures/bar_1.png)
+![bar_2.png](pictures/bar_2.png)
+![pie_2.png](pictures/pie_2.png)
 
 ### 3.3 Insights to answer research questions
 
