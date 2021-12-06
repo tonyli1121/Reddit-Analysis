@@ -93,7 +93,7 @@ Verify the hypothesis/research goals by
    (a) possibility for path to exist given any two posts (success/total)
    (b) avg distance for existing path
     
-3. Compare result after removing top k% most active users.
+4. Compare result after removing top k% most active users.
 
 ---
 
@@ -228,9 +228,16 @@ We see that as we choose more data (sample percentage), the number of authors in
 
 ### 1.3 Finding shortest path
 
-We use `nx`'s builtin function to find shortest path length from each node to other nodes. Below are the results.
+We use `nx`'s builtin function to `find shortest path length` from each node to other nodes. For example:
 
-We also filtered the data by excluding all the nodes with degree <= 1. We will consider those nodes as isolated nodes that have few connection to other nodes. It turns out this procedure not only saves running time but also maintains the data pattern.
+```
+nx.single_source_dijkstra_path_length(G,i,cutoff=10)
+
+for i, j in nodes:
+    nx.shortest_path_length(G, source=i, target=j)
+```
+
+We also `filtered` the data `by excluding all the nodes with degree <= 1`. We will consider those nodes as isolated nodes that have few connection to other nodes. It turns out this procedure not only saves running time but also maintains the data pattern.
 
 ```
 G1.DelDegKNodes(1,1)
@@ -269,16 +276,17 @@ All plotting code: [bottom of project(part1).ipynb](files/main_dataset_analysis.
 
 ![scatter_2.png](pictures/scatter_2.png)
 
-`% Existence` means the chance for path to exist given any two arbitrary nodes, it is given by `number of path`/`(number of authors)**2`
+![pie_1.png](pictures/pie_1.png)
 
+`% Existence` means the chance for path to exist given any two arbitrary nodes, it is given by `number of path`/`(number of authors)**2`
 
 ### 1.6 Insights to answer research questions
 
 According to the results, we can answer research question 1 and 2:
 
-`Q1:` We see that the chance for a path to exist `increases` as we have `more nodes` in the graph. However, it is not sufficient to conclude that the network is connected as a large component as we don't have data supporting us. (we stopped at 60% of main_dataset as otherwise memory error). Hence the conclusion is that: **The 'user chain' in main_dataset exists only if we filter out the isolated nodes**
+`Q1:` We see that the `chance for a path to exist` `increases` as we have `more nodes` in the graph. However, it is not sufficient to conclude that the network is connected as a large component as we don't have data supporting us. (we stopped at 60% of main_dataset as otherwise memory error). Hence the `conclusion` is that: **The 'user chain' in main_dataset exists only if we filter out the isolated nodes**
 
-`Q2:` We only see that as `number of nodes increases`, the `avg path length increases`, but does not have an absolute idea on what the overall path length will be as the value is still increasing. **Hence, we have small path length among the existed paths, but we still need to verify with more detailed dataset.** 
+`Q2:` We only see that as `number of nodes increases`, the `avg path length increases`, but does not have an absolute idea on what the overall path length will be as the value is still increasing. Hence, the `conclusion` is that: **we have small path length among the existed paths, but we still need to verify with more detailed dataset.** 
 
 The `assumption` is that the `path length` will remain increasing but `capped at certain value`, which will require us to check in the `full dataset analysis` that uses the smallest subreddit for comprehensive understanding, and also using the entire full dataset for detailed analysis.
 
@@ -322,7 +330,7 @@ for i in tqdm(range((end_date - start_date).days)):
 
 ### 2.3 verify snap and filtering
 
-We verified that `snap` works on sample(10k) and sample(50k):
+We `verified` that `snap` works on sample(10k) and sample(50k):
 
 `% Existence` means the chance for path to exist given any two arbitrary nodes, it is given by `number of path`/`number of authors)**2`
 
@@ -357,7 +365,7 @@ All plotting code: [bottom of project(part1).ipynb](files/main_dataset_analysis.
 
 Now we are able to answer `research question 3`.
 
-`Q3:` Under subreddit PS5, the users are `strongly connected` (>99% chance for path to exist between arbitrary users). Different from our hypothesis (pathlen ~= 4, 5) the average path length is `~3.0`. **Hence users are strongly connected with small path length under subreddits**
+`Q3:` Under subreddit PS5, the users are `strongly connected` (>99% chance for path to exist between arbitrary users). Different from our hypothesis (pathlen ~= 4, 5) the `average path length is ~3.0`. **Hence users are strongly connected with small path length under subreddits**
 
 ### 2.7 Further steps 
 
@@ -373,7 +381,7 @@ Now we are able to answer `research question 3`.
 
 ### 3.1 Filter users
 
-We consider filter out the top 1%/5%/10%/25% most active users. Then take random 10%/15%/.../30% of users as subgraph to compare their result.
+We consider `filter out` the top 1%/5%/10%/25% `most active` users. Then take random 10%/15%/.../30% of users as subgraph to compare their result to save running time. As we see in plottings from above (1.5 plotting), after removing the nodes with deg<=1, the subgraph maintains same pattern as the full graph.
 
 ```
 # filtering and subgraphing
@@ -390,7 +398,8 @@ for i in [0.01, 0.05, 0.1, 0.25]:
 
 Compare all the results
 ```
-It is also important for us to use some full data, so we also did
+
+It is also important for us to `use some full data`, so we also did
 
 ```
 filter out top 1% most active users
@@ -411,9 +420,9 @@ All plotting code: [bottom of project(part1).ipynb](files/main_dataset_analysis.
 
 Now we are able to answer `research question 4`.
 
-`Q4:` According to the first bar chart, we see that as we remove more active users, the % of existence decrease. This means that the `active users` are `important in constructing network`. **The more activer users we exclude, the less likely a path will exist.** Pie plotting on the full analysis after filtering the top1% further supported this. As the `% Existence` decreased from 99% to 55%. Hence, **the active users indeed act as an important role in connecting users together**. 
+`Q4:` According to the first bar chart, we see that as we `remove more active users`, the % of existence `decreases`. This means that the `active users` are `important in constructing network`. **The more activer users we exclude, the less likely a path will exist.** Pie plotting on the full analysis after filtering the top1% further supported this. As the `% Existence` decreased from `99% to 55%`. Hence, **the active users indeed act as an important role in connecting users together**. 
 
-However, looking at the second bar chart, we see that among existed paths, avg(pathlen) did not change much after we remove top 1% active users. Hence, **the active users affect path length, but not as much as they connect users**
+However, looking at the second bar chart, we see that among existed paths, `avg(pathlen) did not change` much after we `remove top 1% active users`. Hence, **the active users affect path length, but not as much as they connect users**
 
 ## References:
 
@@ -429,5 +438,41 @@ However, looking at the second bar chart, we see that among existed paths, avg(p
 
 [Generalists and Specialists: Using Community Embeddings to Quantify Activity Diversity in Online Platforms by Isaac Waller and Ashton Anderson](http://csslab.cs.toronto.edu/gs/actdiv-www2019.pdf)
 
+---
+
+# Summary
+
+[project(part1).ipynb](files/main_dataset_analysis.ipynb)
+
+[project(part2).ipynb](files/full_dataset_analysis.ipynb)
 
 
+`Q1:` We see that the `chance for a path to exist` `increases` as we have `more nodes` in the graph. However, it is not sufficient to conclude that the network is connected as a large component as we don't have data supporting us. (we stopped at 60% of main_dataset as otherwise memory error). Hence the `conclusion` is that: **The 'user chain' in main_dataset exists only if we filter out the isolated nodes**
+
+`Q2:` We only see that as `number of nodes increases`, the `avg path length increases`, but does not have an absolute idea on what the overall path length will be as the value is still increasing. Hence, the `conclusion` is that: **we have small path length among the existed paths, but we still need to verify with more detailed dataset.** 
+
+The `assumption` is that the `path length` will remain increasing but `capped at certain value`, which will require us to check in the `full dataset analysis` that uses the smallest subreddit for comprehensive understanding, and also using the entire full dataset for detailed analysis.
+
+`Q3:` Under subreddit PS5, the users are `strongly connected` (>99% chance for path to exist between arbitrary users). Different from our hypothesis (pathlen ~= 4, 5) the `average path length is ~3.0`. **Hence users are strongly connected with small path length under subreddits**
+
+`Q4:` According to the first bar chart, we see that as we `remove more active users`, the % of existence `decreases`. This means that the `active users` are `important in constructing network`. **The more activer users we exclude, the less likely a path will exist.** Pie plotting on the full analysis after filtering the top1% further supported this. As the `% Existence` decreased from `99% to 55%`. Hence, **the active users indeed act as an important role in connecting users together**. 
+
+---
+
+# Future work
+
+```
+- if can get more powerful device, try running with completely full dataset to verify hypothesis and assumption we had throughout the research.
+- during this research, there's not enough evidence to say anything about the roles of generalist and specialist. In future we can consider focusing on the connection between the research and the paper.
+- since it is very likely that we can't run the full dataset on any personal devices, also consider to build some algorithm. The algorithm should be able to predict the avg path length of a user to other users.
+    - we dont need to predict % existence as we already found that the users can become one large component.
+    - this is actually one of my research goals at the beginning, but was abondoned because it will require way too much work.
+    - features to consider? word freq, scores (avg score the author earned), # of authors connected.
+    - models to consider? decision tree, lin. regression on # of authors and scores.
+```
+
+---
+
+This is the end of my research datastory and methodologies, I have attached the links to all my working files under the topic `Methodologies`. If there's anything about the project that interests you, please do not hesitate to contact me at tonyli.li@mail.utoronto.ca
+
+Thanks for your patience.
